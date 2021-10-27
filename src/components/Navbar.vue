@@ -8,7 +8,7 @@
         </TransitionChild>
 
         <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
-          <div class="relative max-w-xs w-full bg-white shadow-xl pb-12 flex flex-col overflow-y-auto">
+          <div class="relative max-w-xs w-full bg-white shadow-xl pb-6 flex flex-col overflow-y-auto">
             <div class="px-4 pt-5 pb-2 flex">
               <button type="button" class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400" @click="open = false">
                 <span class="sr-only">Close menu</span>
@@ -41,13 +41,13 @@
                 </TabList>
               </div>
               <TabPanels as="template">
-                <TabPanel v-for="category in navigation.categories" :key="category.name" class="pt-10 pb-8 px-4 space-y-10">
+                <TabPanel v-for="category in navigation.categories" :key="category.name" class="pt-8 pb-6 px-4 space-y-8">
                   <div class="grid grid-cols-2 gap-x-4">
                     <div v-for="item in category.featured" :key="item.name" class="group relative text-sm">
                       <div class="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
                         <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                       </div>
-                      <a :href="item.href" class="mt-6 block font-medium text-gray-900">
+                      <a :href="item.href" class="mt-4 block font-medium text-gray-900">
                         <span class="absolute z-10 inset-0" aria-hidden="true" />
                         {{ item.name }}
                       </a>
@@ -73,25 +73,25 @@
               </div>
             </div>
 
-            <div class="border-t border-gray-200 py-6 px-4">
-              <a href="#" class="text-3xl mx-2">
+            <div class="mx-auto border-t border-gray-200 py-2 px-4">
+                <a href="#" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'instagram']" />
                 </a>
-                <a href="#" class="text-3xl mx-2">
+                <a href="#" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'facebook-square']" />
                 </a>
-                <a href="#" class="text-3xl mx-2">
+                <a href="#" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'linkedin']" />
                 </a>
-                <a href="#" class="text-3xl mx-2">
+                <a href="#" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'twitter']" />
                 </a>
-                <a href="#" class="text-3xl mx-2">
+                <a href="#" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'whatsapp']" />
                 </a>
                 <div>
                   Made With
-                  <font-awesome-icon :icon="['fas', 'heart']" class="mx-1 text-red-600" />,
+                  <FontAwesomeIcon :icon="['fas', 'heart']" class="mx-1 text-red-600" />,
                   Am.Chris_KE
                 </div>
             </div>
@@ -214,6 +214,7 @@
 
 <script>
 import { ref } from 'vue'
+import axios from 'axios'
 import {
   Dialog,
   DialogOverlay,
@@ -351,6 +352,40 @@ export default {
     SearchIcon,
     ShoppingBagIcon,
     XIcon
+  },
+  data () {
+    return {
+      hotels: []
+    }
+  },
+  methods: {
+    async getHotels () {
+      try {
+        const options = {
+          method: 'GET',
+          url: 'https://sandbox.impala.travel/v1/hotels',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': 'sandb_wlVAILfL1WLprdIp8DpowMLIHnnpLvivgBxdSiam',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Access-Control-Allow-Credentials': true,
+            crossorigin: true
+          }
+        }
+
+        axios.request(options).then(function (response) {
+          console.log(response.data)
+        }).catch(function (error) {
+          console.error(error)
+        })
+      } catch (err) {
+        console.log(err.message)
+      }
+    }
+  },
+  mounted () {
+    this.getHotels()
   },
   setup () {
     const open = ref(false)
