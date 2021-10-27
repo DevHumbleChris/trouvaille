@@ -51,7 +51,7 @@
                         <span class="absolute z-10 inset-0" aria-hidden="true" />
                         {{ item.name }}
                       </a>
-                      <p aria-hidden="true" class="mt-1">Shop now</p>
+                      <p aria-hidden="true" class="mt-1 text-blue-600">Book Now</p>
                     </div>
                   </div>
                 </TabPanel>
@@ -102,7 +102,9 @@
 
     <header class="relative bg-white">
       <p class="bg-indigo-600 h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
-        Trouvaille: Home Is Where The Heart Is.
+        Trouvaille: Home Is Where The Heart
+        <FontAwesomeIcon :icon="['fas', 'heart']" class="mx-1 text-red-600" />
+        Is.
       </p>
 
       <nav aria-label="Top" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -199,7 +201,7 @@
               <!-- Cart -->
               <div class="ml-4 flow-root lg:ml-6">
                 <a href="#" class="group -m-2 p-2 flex items-center">
-                  <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                  <GlobeIcon class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                   <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                   <span class="sr-only">items in cart, view bag</span>
                 </a>
@@ -214,7 +216,6 @@
 
 <script>
 import { ref } from 'vue'
-import axios from 'axios'
 import {
   Dialog,
   DialogOverlay,
@@ -230,71 +231,44 @@ import {
   TransitionChild,
   TransitionRoot
 } from '@headlessui/vue'
-import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/vue/outline'
+import { MenuIcon, SearchIcon, GlobeIcon, XIcon } from '@heroicons/vue/outline'
+import { mapState } from 'vuex'
 
 const navigation = {
   categories: [
     {
-      id: 'women',
-      name: 'Women',
+      id: 'suite',
+      name: 'Suite',
       featured: [
         {
-          name: 'New Arrivals',
+          name: 'Junior Suite',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.'
+          imageSrc: 'https://cdn.impala.travel/properties/ckn8pkxkg00ox0snn461ybnmh.jpg',
+          imageAlt: 'Junior Suite'
         },
         {
-          name: 'Basic Tees',
+          name: 'Suite Sorrento',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.'
-        }
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' }
-          ]
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' }
-          ]
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' }
-          ]
+          imageSrc: 'https://cdn.impala.travel/properties/ckn8kst3c00hr0snn9o755ju8.jpg',
+          imageAlt: 'Suite Sorrento'
         }
       ]
     },
     {
-      id: 'men',
-      name: 'Men',
+      id: 'apartments',
+      name: 'Apartments',
       featured: [
         {
-          name: 'New Arrivals',
+          name: 'Sketch Rooms & Apartments',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.'
+          imageSrc: 'https://cdn.impala.travel/properties/ckn7el6c5001x0snnck2xgevv.jpg',
+          imageAlt: 'Sketch Rooms & Apartments'
         },
         {
-          name: 'Artwork Tees',
+          name: 'Strauss Apartments',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
-          imageAlt:
-            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.'
+          imageSrc: 'https://cdn.impala.travel/properties/ckn7i8oje00830snn7r8d259i.jpg',
+          imageAlt: 'Strauss Apartments'
         }
       ],
       sections: [
@@ -327,7 +301,7 @@ const navigation = {
     }
   ],
   pages: [
-    { name: 'Hotels', href: '#' },
+    { name: 'Hotels', href: '/' },
     { name: 'Wishlist', href: '#' }
   ]
 }
@@ -350,46 +324,23 @@ export default {
     TransitionRoot,
     MenuIcon,
     SearchIcon,
-    ShoppingBagIcon,
+    GlobeIcon,
     XIcon
   },
   data () {
-    return {
-      hotels: []
-    }
+    return {}
+  },
+  computed: {
+    ...mapState([
+      'hotels'
+    ])
   },
   methods: {
-    async getHotels () {
-      try {
-        const options = {
-          method: 'GET',
-          url: 'https://sandbox.impala.travel/v1/hotels',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'sandb_wlVAILfL1WLprdIp8DpowMLIHnnpLvivgBxdSiam',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            'Access-Control-Allow-Credentials': true,
-            crossorigin: true
-          }
-        }
-
-        axios.request(options).then(function (response) {
-          console.log(response.data)
-        }).catch(function (error) {
-          console.error(error)
-        })
-      } catch (err) {
-        console.log(err.message)
-      }
-    }
   },
   mounted () {
-    this.getHotels()
   },
   setup () {
     const open = ref(false)
-
     return {
       navigation,
       open

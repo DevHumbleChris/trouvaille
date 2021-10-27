@@ -5,4 +5,11 @@
 
 * {
   font-family: 'Zen Kurenaido', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f1f5f8;
 }

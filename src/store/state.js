@@ -1,4 +1,5 @@
-import hotels from '../data'
+import hotelsData from '../data.json'
+const hotels = hotelsData.data
 
 export default {
   hotels
