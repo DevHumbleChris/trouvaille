@@ -158,6 +158,7 @@
 import { ref } from 'vue'
 import { StarIcon } from '@heroicons/vue/solid'
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
+import { mapState } from 'vuex'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -220,6 +221,18 @@ export default {
     RadioGroupLabel,
     RadioGroupOption,
     StarIcon
+  },
+  data () {
+    return {}
+  },
+  computed: {
+    ...mapState([
+      'hotels'
+    ]),
+    hotel () {
+      const hotel = this.hotels.filter((hotel) => hotel.hotelId === this.$route.params.hotelID)
+      return hotel
+    }
   },
   setup () {
     const selectedColor = ref(product.colors[0])

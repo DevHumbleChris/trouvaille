@@ -18,7 +18,7 @@
 
             <!-- Logo -->
             <div class="ml-4 flex lg:ml-0 px-3 flex justify-center">
-              <a href="#">
+              <router-link to="/">
                 <span class="sr-only">Workflow</span>
                 <div class="flex items-center">
                   <img class="h-14 w-auto" src="https://www.kindpng.com/picc/m/271-2712971_cute-house-clipart-png-house-clipart-png-transparent.png" alt="" />
@@ -26,7 +26,7 @@
                     Trouvaille
                   </span>
                 </div>
-              </a>
+              </router-link>
             </div>
 
             <!-- Links -->
@@ -117,7 +117,7 @@
 
             <!-- Logo -->
             <div class="ml-4 flex lg:ml-0">
-              <a href="#">
+              <router-link to="/" href="#">
                 <span class="sr-only">Workflow</span>
                 <div class="flex items-center">
                   <img class="h-8 w-auto" src="https://www.kindpng.com/picc/m/271-2712971_cute-house-clipart-png-house-clipart-png-transparent.png" alt="" />
@@ -125,7 +125,7 @@
                     Trouvaille
                   </span>
                 </div>
-              </a>
+              </router-link>
             </div>
 
             <!-- Flyout menus -->
