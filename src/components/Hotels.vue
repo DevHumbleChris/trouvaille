@@ -10,10 +10,10 @@
             <div class="mt-4 flex justify-between">
               <div>
                 <h3 class="text-sm text-blue-900 font-extrabold">
-                  <a href="#">
+                  <router-link to="/about">
                     <span aria-hidden="true" class="absolute inset-0" />
                     {{ hotel.name }}
-                  </a>
+                  </router-link>
                 </h3>
                 <div class="p-1">
                   <span v-for="(amenity, index) in hotel.amenities" :key="amenity.code" class="mt-1 text-sm text-gray-500">
