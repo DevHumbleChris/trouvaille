@@ -19,13 +19,21 @@
         </div>
       </div>
 
-      <div v-for="(image, index) in hotel.images" class="`grid grid-cols-${hotel.images.length} gap-1 mx-auto`" :key="index">
-        <div class="w-full rounded-2xl">
-            <img :src="image.url" :alt="image.altText" />
+      <!-- component -->
+      <div class="flex flex-col bg-white m-auto p-auto">
+        <div class="flex overflow-x-scroll hide-scroll-bar">
+          <div v-for="(image, index) in hotel.images" :key="index" class="flex flex-nowrap">
+            <div class="inline-block px-3 my-3">
+              <div
+                class="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
+              >
+                <img :src="image.url" :alt="image.altText" class="w-full h-full object-cover" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Product info -->
       <div class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
         <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
           <h3 class="text-center text-2xl text-blue-600 font-extrabold">
@@ -126,14 +134,6 @@
               </ul>
             </div>
           </div>
-
-          <div class="mt-4">
-            <h2 class="text-lg font-semibold text-gray-900">Details</h2>
-
-            <div class="mt-4 space-y-6">
-              <p class="text-sm text-gray-600">{{ product.details }}</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -200,12 +200,6 @@ const product = {
 }
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
-// const icons = [
-//   {
-//     code: 'fas'
-//   }
-// ]
-
 export default {
   name: 'HotelReview',
   components: {
@@ -239,3 +233,13 @@ export default {
   }
 }
 </script>
+
+<style>
+.hide-scroll-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+</style>
