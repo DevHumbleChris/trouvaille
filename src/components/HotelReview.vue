@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-        <form class="mt-4 mb-4 border px-3 py-2 rounded-xl">
+        <form class="mt-4 mb-4 border px-3 py-2 rounded-xl" @submit.prevent="handleSubmit">
           <div class="">
             <p class="text-xl my-2">
               <span class="font-extrabold">
@@ -101,20 +101,31 @@
             <h3 class="text-xl font-extrabold">
               Guests
             </h3>
+            <p v-if="formData.adult > 0 || formData.children > 0 || formData.infants > 0" class="p-2 mb-2">
+              <span v-if="formData.adult > 0">
+                {{ formData.adult }} Adults
+              </span>
+              <span v-if="formData.children > 0">
+                {{ formData.children }} children
+              </span>
+              <span v-if="formData.infants > 0">
+                {{ formData.infants }} infants.
+              </span>
+            </p>
             <div class="border rounded p-3">
               <p class="py-2">
                 <span class="font-bold">
                   Adults
                 </span>
                 <span class="float-right flex justify-between items-center">
-                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <FontAwesomeIcon :icon="['fas', 'plus']" />
-                  </button>
-                  <p class="">
-                    4
+                <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" @click="decAdult" :disabled="formData.adult === 0">
+                  <FontAwesomeIcon :icon="['fas', 'minus']" />
+                </button>
+                  <p>
+                    {{ formData.adult }}
                   </p>
-                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <FontAwesomeIcon :icon="['fas', 'minus']" />
+                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" @click="incAdult">
+                    <FontAwesomeIcon :icon="['fas', 'plus']" />
                   </button>
                 </span>
               </p>
@@ -123,14 +134,14 @@
                   Children
                 </span>
                 <span class="float-right flex justify-between items-center">
-                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <FontAwesomeIcon :icon="['fas', 'plus']" />
-                  </button>
-                  <p class="">
-                    4
-                  </p>
-                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" @click="decChildren" :disabled="formData.children === 0">
                     <FontAwesomeIcon :icon="['fas', 'minus']" />
+                  </button>
+                  <p>
+                    {{ formData.children }}
+                  </p>
+                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" @click="incChildren">
+                    <FontAwesomeIcon :icon="['fas', 'plus']" />
                   </button>
                 </span>
                 <span class="block px-2">
@@ -142,14 +153,14 @@
                   Infants
                 </span>
                 <span class="float-right flex justify-between items-center">
-                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <FontAwesomeIcon :icon="['fas', 'plus']" />
+                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" @click="decInfants" :disabled="formData.infants === 0">
+                    <FontAwesomeIcon :icon="['fas', 'minus']" />
                   </button>
                   <p class="">
-                    4
+                    {{ formData.infants }}
                   </p>
-                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <FontAwesomeIcon :icon="['fas', 'minus']" />
+                  <button class="mx-4 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" @click="incInfants">
+                    <FontAwesomeIcon :icon="['fas', 'plus']" />
                   </button>
                 </span>
                 <span class="block px-2">
@@ -236,7 +247,12 @@ export default {
   },
   data () {
     return {
-      isAddedToWishList: false
+      isAddedToWishList: false,
+      formData: {
+        adult: 0,
+        children: 0,
+        infants: 0
+      }
     }
   },
   computed: {
@@ -261,6 +277,25 @@ export default {
         this.ADD_TO_WISH_LIST(this.hotel.hotelId)
         this.isAddedToWishList = true
       }
+    },
+    handleSubmit () {},
+    incAdult () {
+      this.formData.adult++
+    },
+    decAdult () {
+      this.formData.adult--
+    },
+    incChildren () {
+      this.formData.children++
+    },
+    decChildren () {
+      this.formData.children--
+    },
+    incInfants () {
+      this.formData.infants++
+    },
+    decInfants () {
+      this.formData.infants--
     }
   },
   setup () {

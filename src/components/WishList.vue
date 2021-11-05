@@ -26,9 +26,9 @@
                   <div class="mt-8">
                     <div class="flow-root">
                       <ul role="list" class="-my-6 divide-y divide-gray-200">
-                        <li v-for="product in products" :key="product.id" class="py-6 flex">
+                        <li v-for="hotel in wishList" :key="hotel.hotelId" class="py-6 flex">
                           <div class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
-                            <img :src="product.imageSrc" :alt="product.imageAlt" class="w-full h-full object-center object-cover" />
+                            <img :src="hotel.images[2].url" :alt="hotel.images[2].altText" class="w-full h-full object-center object-cover" />
                           </div>
 
                           <div class="ml-4 flex-1 flex flex-col">
@@ -36,19 +36,19 @@
                               <div class="flex justify-between text-base font-medium text-gray-900">
                                 <h3>
                                   <a :href="product.href">
-                                    {{ product.name }}
+                                    {{ hotel.name }}
                                   </a>
                                 </h3>
                                 <p class="ml-4">
-                                  {{ product.price }}
+                                  38
                                 </p>
                               </div>
                               <p class="mt-1 text-sm text-gray-500">
-                                {{ product.color }}
+                                78
                               </p>
                             </div>
                             <div class="flex-1 flex items-end justify-between text-sm">
-                              <p class="text-gray-500">Qty {{ product.quantity }}</p>
+                              <p class="text-gray-500">Qty</p>
 
                               <div class="flex">
                                 <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
@@ -90,30 +90,6 @@ import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } f
 import { XIcon } from '@heroicons/vue/outline'
 import { mapState, mapMutations } from 'vuex'
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.'
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.'
-  }
-]
-
 export default {
   name: 'WishList',
   components: {
@@ -126,19 +102,14 @@ export default {
   },
   computed: {
     ...mapState([
-      'openWishList'
+      'openWishList',
+      'wishList'
     ])
   },
   methods: {
     ...mapMutations([
       'WISH_LIST_MODAL'
     ])
-  },
-  setup () {
-    return {
-      products,
-      open
-    }
   }
 }
 </script>
