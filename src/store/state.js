@@ -2,5 +2,7 @@ import hotelsData from '../data.json'
 const hotels = hotelsData.data
 
 export default {
-  hotels
+  hotels,
+  openWishList: false,
+  wishList: []
 }
