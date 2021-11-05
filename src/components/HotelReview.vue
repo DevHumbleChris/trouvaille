@@ -1,26 +1,6 @@
 <template>
   <div class="bg-white">
     <div class="pt-6">
-      <nav aria-label="Breadcrumb">
-        <ol role="list" class="max-w-2xl mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:max-w-7xl lg:px-8">
-          <li v-for="breadcrumb in product.breadcrumbs" :key="breadcrumb.id">
-            <div class="flex items-center">
-              <a :href="breadcrumb.href" class="mr-2 text-sm font-medium text-gray-900">
-                {{ breadcrumb.name }}
-              </a>
-              <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-4 h-5 text-gray-300">
-                <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-              </svg>
-            </div>
-          </li>
-          <li class="text-sm">
-            <a :href="product.href" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600">
-              {{ product.name }}
-            </a>
-          </li>
-        </ol>
-      </nav>
-
       <!-- Image gallery -->
       <div class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
         <div class="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
@@ -35,21 +15,27 @@
           </div>
         </div>
         <div class="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
-          <img :src="product.images[3].src" :alt="product.images[3].alt" class="w-full h-full object-center object-cover" />
+          <img :src="hotel.images[2].url" :alt="product.images[2].altText" class="w-full h-full object-center object-center" />
+        </div>
+      </div>
+
+      <div v-for="(image, index) in hotel.images" class="`grid grid-cols-${hotel.images.length} gap-1 mx-auto`" :key="index">
+        <div class="w-full rounded-2xl">
+            <img :src="image.url" :alt="image.altText" />
         </div>
       </div>
 
       <!-- Product info -->
       <div class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
         <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-          <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-            {{ product.name }}
-          </h1>
+          <h3 class="text-center text-2xl text-blue-600 font-extrabold">
+            {{ hotel.name }}
+          </h3>
         </div>
 
         <!-- Options -->
         <div class="mt-4 lg:mt-0 lg:row-span-3">
-          <h2 class="sr-only">Product information</h2>
+          <h2 class="sr-only">Hotel Information</h2>
           <p class="text-3xl text-gray-900">{{ product.price }}</p>
 
           <!-- Reviews -->
@@ -115,7 +101,7 @@
               </RadioGroup>
             </div>
 
-            <button type="submit" class="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add to bag</button>
+            <button type="submit" class="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Check Availability</button>
           </form>
         </div>
 
@@ -125,24 +111,24 @@
             <h3 class="sr-only">Description</h3>
 
             <div class="space-y-6">
-              <p class="text-base text-gray-900">{{ product.description }}</p>
+              <p class="text-base text-gray-900">{{ hotel.description.short || hotel.description }}</p>
             </div>
           </div>
 
-          <div class="mt-10">
-            <h3 class="text-sm font-medium text-gray-900">Highlights</h3>
+          <div class="mt-4">
+            <h3 class="text-lg font-semibold text-gray-900">What This Place Offers</h3>
 
-            <div class="mt-4">
+            <div class="mt-2">
               <ul role="list" class="pl-4 list-disc text-sm space-y-2">
-                <li v-for="highlight in product.highlights" :key="highlight" class="text-gray-400">
-                  <span class="text-gray-600">{{ highlight }}</span>
+                <li v-for="amenity in hotel.amenities" :key="amenity.code" class="text-gray-400">
+                  <span class="text-gray-600">{{ amenity.formatted }}</span>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div class="mt-10">
-            <h2 class="text-sm font-medium text-gray-900">Details</h2>
+          <div class="mt-4">
+            <h2 class="text-lg font-semibold text-gray-900">Details</h2>
 
             <div class="mt-4 space-y-6">
               <p class="text-sm text-gray-600">{{ product.details }}</p>
@@ -214,6 +200,12 @@ const product = {
 }
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
+// const icons = [
+//   {
+//     code: 'fas'
+//   }
+// ]
+
 export default {
   name: 'HotelReview',
   components: {
@@ -231,7 +223,7 @@ export default {
     ]),
     hotel () {
       const hotel = this.hotels.filter((hotel) => hotel.hotelId === this.$route.params.hotelID)
-      return hotel
+      return hotel[0]
     }
   },
   setup () {
