@@ -60,7 +60,12 @@
 
             <div class="border-t border-gray-200 py-6 px-4 space-y-6">
               <div v-for="page in navigation.pages" :key="page.name" class="flow-root">
-                <a :href="page.href" class="-m-2 p-2 block font-medium text-gray-900">{{ page.name }}</a>
+                <router-link v-if="page.name === 'Hotels'" :to="page.href" class="-m-2 p-2 block font-medium text-gray-900" @click="open = false">
+                  {{ page.name }}
+                </router-link>
+                <button v-if="page.name === 'Wishlist'" class="hover:text-gray-800" @click="myWishList">
+                  Wishlist
+                </button>
               </div>
             </div>
 
@@ -158,20 +163,6 @@
                                 <p aria-hidden="true" class="mt-1">Shop now</p>
                               </div>
                             </div>
-                            <div class="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                              <div v-for="section in category.sections" :key="section.name">
-                                <p :id="`${section.name}-heading`" class="font-medium text-gray-900">
-                                  {{ section.name }}
-                                </p>
-                                <ul role="list" :aria-labelledby="`${section.name}-heading`" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                  <li v-for="item in section.items" :key="item.name" class="flex">
-                                    <a :href="item.href" class="hover:text-gray-800">
-                                      {{ item.name }}
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -179,7 +170,12 @@
                   </transition>
                 </Popover>
 
-                <a v-for="page in navigation.pages" :key="page.name" :href="page.href" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{ page.name }}</a>
+                <router-link to="/" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                  Hotels
+                </router-link>
+                <button class="hover:text-gray-800 text-sm font-medium text-gray-700 hover:text-gray-800" @click="WISH_LIST_MODAL">
+                  Wishlist
+                </button>
               </div>
             </PopoverGroup>
 
@@ -200,11 +196,13 @@
 
               <!-- Cart -->
               <div class="ml-4 flow-root lg:ml-6">
-                <a href="#" class="group -m-2 p-2 flex items-center" @click="WISH_LIST_MODAL">
-                  <GlobeIcon class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
-                  <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                <button class="group -m-2 p-2 flex items-center" @click="WISH_LIST_MODAL">
+                  <GlobeIcon class="flex-shrink-0 h-6 w-6 text-blue-400 group-hover:text-blue-500" aria-hidden="true" />
+                  <span v-if="noOfWishListBucket > 0" class="ml-2 text-lg font-extrabold text-blue-700 group-hover:text-gray-800">
+                    {{ noOfWishListBucket }}
+                  </span>
                   <WishList />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -232,7 +230,7 @@ import {
   TransitionRoot
 } from '@headlessui/vue'
 import { MenuIcon, SearchIcon, GlobeIcon, XIcon } from '@heroicons/vue/outline'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import WishList from '@/components/WishList.vue'
 
 const navigation = {
@@ -335,12 +333,19 @@ export default {
   computed: {
     ...mapState([
       'hotels'
+    ]),
+    ...mapGetters([
+      'noOfWishListBucket'
     ])
   },
   methods: {
     ...mapMutations([
       'WISH_LIST_MODAL'
-    ])
+    ]),
+    myWishList () {
+      this.open = false
+      this.WISH_LIST_MODAL()
+    }
   },
   setup () {
     const open = ref(false)

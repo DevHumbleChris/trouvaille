@@ -1,5 +1,17 @@
 <template>
-  <div class="bg-white">
+  <div v-if="pageLoadAnimation" class="mx-auto flex justify-center align-center max-w-xs mt-64 mb-3">
+    <FulfillingBouncingCircleSpinner
+    :animation-duration="4000"
+    :size="90"
+    color="#ff1d5e"
+    />
+  </div>
+  <div v-if="pageLoadAnimation" class="text-center text-xl">
+    Trouvaille: Home Is Where the Heart
+    <FontAwesomeIcon :icon="['fas', 'heart']" class="text-red-600 mx-1" />
+    Is.
+  </div>
+  <div v-else class="bg-white">
     <div class="pt-3">
       <h3 class="text-center text-2xl text-blue-600 font-extrabold">
         {{ hotel.name }}
@@ -185,6 +197,7 @@
 import { ref } from 'vue'
 import { StarIcon } from '@heroicons/vue/solid'
 import { mapState, mapMutations } from 'vuex'
+import { FulfillingBouncingCircleSpinner } from 'epic-spinners'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -243,11 +256,11 @@ const reviews = { href: '#', average: 4, totalCount: 117 }
 export default {
   name: 'HotelReview',
   components: {
-    StarIcon
+    StarIcon,
+    FulfillingBouncingCircleSpinner
   },
   data () {
     return {
-      isAddedToWishList: false,
       formData: {
         adult: 0,
         children: 0,
@@ -257,25 +270,35 @@ export default {
   },
   computed: {
     ...mapState([
-      'hotels'
+      'hotels',
+      'wishList',
+      'pageLoadAnimation'
     ]),
     hotel () {
       const hotel = this.hotels.filter((hotel) => hotel.hotelId === this.$route.params.hotelID)
       return hotel[0]
+    },
+    isAddedToWishList () {
+      const hotel = this.wishList.filter(oneHotel => oneHotel.hotelId === this.hotel.hotelId)
+      if (hotel[0] === undefined) {
+        return false
+      } else {
+        return hotel[0].isAddedToWishList
+      }
     }
   },
   methods: {
     ...mapMutations([
       'ADD_TO_WISH_LIST',
-      'REMOVE_FROM_WISH_LIST'
+      'REMOVE_FROM_WISH_LIST',
+      'LOADING_SPINNER'
     ]),
     addWishList () {
       if (this.isAddedToWishList) {
-        this.isAddedToWishList = false
         this.REMOVE_FROM_WISH_LIST(this.hotel.hotelId)
+        this.isAddedToWishList = false
       } else {
         this.ADD_TO_WISH_LIST(this.hotel.hotelId)
-        this.isAddedToWishList = true
       }
     },
     handleSubmit () {},
@@ -297,6 +320,9 @@ export default {
     decInfants () {
       this.formData.infants--
     }
+  },
+  mounted () {
+    this.LOADING_SPINNER()
   },
   setup () {
     const selectedColor = ref(product.colors[0])

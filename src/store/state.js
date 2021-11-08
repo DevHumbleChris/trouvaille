@@ -4,5 +4,6 @@ const hotels = hotelsData.data
 export default {
   hotels,
   openWishList: false,
-  wishList: []
+  wishList: [],
+  pageLoadAnimation: false
 }
