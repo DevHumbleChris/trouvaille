@@ -79,19 +79,22 @@
             </div>
 
             <div class="mx-auto border-t border-gray-200 py-2 px-4">
-                <a href="#" class="text-2xl mx-2">
+                <a href="https://github.com/DevHumbleChris" class="text-2xl mx-2">
+                  <FontAwesomeIcon :icon="['fab', 'github']" />
+                </a>
+                <a href="https://www.instagram.com/am.chris_ke/" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'instagram']" />
                 </a>
-                <a href="#" class="text-2xl mx-2">
+                <a href="https://www.facebook.com/people/Humble-Chris/100011196098630/" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'facebook-square']" />
                 </a>
-                <a href="#" class="text-2xl mx-2">
+                <a href="https://www.linkedin.com/in/dev-humble-chris-2870331aa/" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'linkedin']" />
                 </a>
-                <a href="#" class="text-2xl mx-2">
+                <a href="https://twitter.com/AmChrisKE" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'twitter']" />
                 </a>
-                <a href="#" class="text-2xl mx-2">
+                <a href="https://wa.me/message/BSLLTZE6NKUIF1" class="text-2xl mx-2">
                   <FontAwesomeIcon :icon="['fab', 'whatsapp']" />
                 </a>
                 <div>
