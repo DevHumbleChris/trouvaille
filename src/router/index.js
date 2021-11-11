@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Homepage from '../views/Homepage.vue'
 import HotelReview from '@/components/HotelReview.vue'
-import Login from '../views/About.vue'
+import Login from '../views/Login.vue'
+import Signup from '../views/Signup.vue'
 import NotFound from '@/components/NotFound.vue'
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
   },
   {
     path: '/hotel-review/:hotelID',

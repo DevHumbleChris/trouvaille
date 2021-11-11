@@ -71,10 +71,14 @@
 
             <div class="border-t border-gray-200 py-6 px-4 space-y-6">
               <div class="flow-root">
-                <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Sign in</a>
+                <router-link to="/login" class="-m-2 p-2 block font-medium text-gray-900" @click="open = false">
+                  Sign in
+                </router-link>
               </div>
               <div class="flow-root">
-                <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Create account</a>
+                <router-link to="/signup" class="-m-2 p-2 block font-medium text-gray-900" @click="open = false">
+                  Create account
+                </router-link>
               </div>
             </div>
 
@@ -184,9 +188,13 @@
 
             <div class="ml-auto flex items-center">
               <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                <a href="#" class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</a>
+                <router-link to="/signup" class="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  Sign in
+                </router-link>
                 <span class="h-6 w-px bg-gray-200" aria-hidden="true" />
-                <a href="#" class="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</a>
+                <router-link to="/login" class="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  Create account
+                </router-link>
               </div>
 
               <!-- Search -->

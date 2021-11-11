@@ -17,7 +17,7 @@
           </h3>
         </div>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
+          Register Account.
         </h2>
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST">
@@ -56,15 +56,12 @@
 
         <div class="flex items-center justify-between">
           <div class="flex items-center">
-            <router-link to="/signup" class="ml-2 block font-medium text-indigo-600 hover:text-indigo-500">
-              Create Account?
+            <span class="ml-2 block font-medium">
+              Already Have An Account?
+            </span>
+            <router-link to="/login" class="font-extrabold text-md text-indigo-600 hover:text-indigo-500 mx-2">
+              Sign in.
             </router-link>
-          </div>
-
-          <div class="text-sm">
-            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
-              Forgot your password?
-            </a>
           </div>
         </div>
       </form>
@@ -76,7 +73,7 @@
 import { LockClosedIcon } from '@heroicons/vue/solid'
 
 export default {
-  name: 'Login',
+  name: 'Signup',
   components: {
     LockClosedIcon
   }
