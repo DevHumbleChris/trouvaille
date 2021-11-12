@@ -43,6 +43,11 @@
           </button>
         </div>
       </form>
+
+      <h3 class="text-center text-xl font-extrabold">
+        Or
+      </h3>
+
       <div>
         <button class="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="googleSignIn" :disabled="authenticationAnimation.type === 'google-sign-in'">
           <span class="absolute left-0 inset-y-0 flex items-center pl-3">

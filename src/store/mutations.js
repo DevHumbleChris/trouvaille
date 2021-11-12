@@ -1,4 +1,4 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export default {
   WISH_LIST_MODAL (state) {
@@ -95,5 +95,16 @@ export default {
         type: ''
       }
     }, 3000)
+  },
+  SIGN_OUT () {
+    const auth = getAuth()
+
+    signOut(auth)
+      .then(() => {
+        alert('Logout successfully')
+      })
+      .catch((err) => {
+        alert(err.message)
+      })
   }
 }

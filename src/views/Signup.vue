@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+  <div class="min-h-full flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-4">
       <div>
         <div class="flex justify-center items-center">
           <img class="h-12" src="https://www.kindpng.com/picc/m/271-2712971_cute-house-clipart-png-house-clipart-png-transparent.png" alt="Workflow" />
@@ -8,11 +8,11 @@
             Trouvaille
           </h3>
         </div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 class="mt-2 text-center text-3xl font-extrabold text-gray-900">
           Register Account.
         </h2>
       </div>
-      <form class="mt-4 space-y-6 border p-2 border-gray-400 rounded-2xl" method="POST" @submit.prevent="handleFormSubmit">
+      <form class="mt-3 space-y-3 border p-2 border-gray-400 rounded-2xl" method="POST" @submit.prevent="handleFormSubmit">
         <Alert />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
@@ -43,6 +43,11 @@
           </button>
         </div>
       </form>
+
+      <h3 class="text-center text-xl font-extrabold">
+        Or
+      </h3>
+
       <div>
         <button class="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="googleSignIn">
           <span class="absolute left-0 inset-y-0 flex items-center pl-3">
