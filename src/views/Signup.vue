@@ -1,12 +1,4 @@
 <template>
-  <!--
-    This example requires updating your template:
-
-    ```
-    <html class="h-full bg-gray-50">
-    <body class="h-full">
-    ```
-  -->
   <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div>
@@ -34,11 +26,20 @@
         </div>
 
         <div>
-          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" :disabled="authenticationAnimation.type === 'sign-up'">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
             </span>
-            Sign up
+            <CirclesToRhombusesSpinner
+              v-if="authenticationAnimation.type === 'sign-up'"
+              :animation-duration="1200"
+              :circles-num="3"
+              :circle-size="15"
+              color="#fff"
+            />
+            <span v-else>
+              Sign up
+            </span>
           </button>
         </div>
       </form>
@@ -47,13 +48,31 @@
           <span class="absolute left-0 inset-y-0 flex items-center pl-3">
             <FontAwesomeIcon :icon="['fab', 'google']" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
           </span>
-          Sign in With Google
+          <CirclesToRhombusesSpinner
+            v-if="authenticationAnimation.type === 'google-sign-in'"
+            :animation-duration="1200"
+            :circles-num="3"
+            :circle-size="15"
+            color="#fff"
+          />
+          <span v-else>
+            Sign in With Google
+          </span>
         </button>
         <button class="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           <span class="absolute left-0 inset-y-0 flex items-center pl-3">
             <FontAwesomeIcon :icon="['fas', 'user-astronaut']" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
           </span>
-          Sign in As Guest
+          <CirclesToRhombusesSpinner
+            v-if="authenticationAnimation.type === 'guest-sign-in'"
+            :animation-duration="1200"
+            :circles-num="3"
+            :circle-size="15"
+            color="#fff"
+          />
+          <span v-else>
+            Sign in As Guest
+          </span>
         </button>
       </div>
       <div class="flex items-center justify-between">
@@ -71,22 +90,25 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { LockClosedIcon } from '@heroicons/vue/solid'
 import { useStore } from 'vuex'
 import Alert from '@/components/Alert.vue'
+import { CirclesToRhombusesSpinner } from 'epic-spinners'
 
 export default {
   name: 'Signup',
   components: {
     LockClosedIcon,
-    Alert
+    Alert,
+    CirclesToRhombusesSpinner
   },
   setup () {
     const user = ref([])
     const email = ref('')
     const password = ref('')
     const store = useStore()
+    const authenticationAnimation = computed(() => store.state.authenticationAnimation)
 
     function googleSignIn () {
       store.commit('SIGN_IN_WITH_GOOGLE')
@@ -104,7 +126,8 @@ export default {
       googleSignIn,
       email,
       password,
-      handleFormSubmit
+      handleFormSubmit,
+      authenticationAnimation
     }
   }
 }

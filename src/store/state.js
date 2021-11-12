@@ -6,5 +6,9 @@ export default {
   openWishList: false,
   wishList: [],
   pageLoadAnimation: false,
-  authenticationError: ''
+  authenticationError: '',
+  authenticationAnimation: {
+    load: false,
+    type: ''
+  }
 }
