@@ -1,3 +1,5 @@
+import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'
+
 export default {
   WISH_LIST_MODAL (state) {
     state.openWishList = !state.openWishList
@@ -23,5 +25,31 @@ export default {
     setTimeout(() => {
       state.pageLoadAnimation = false
     }, 5000)
+  },
+  SIGN_IN_WITH_GOOGLE () {
+    const provider = new GoogleAuthProvider()
+    const auth = getAuth()
+
+    signInWithPopup(auth, provider)
+      .then(result => {
+        console.log(result)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  SIGN_UP_WITH_EMAIL (state, payload) {
+    const auth = getAuth()
+
+    createUserWithEmailAndPassword(auth, payload.email, payload.password)
+      .then(userCredential => {
+        console.log(userCredential)
+      })
+      .catch(err => {
+        state.authenticationError = err.message
+      })
+  },
+  CLOSE_ALERT_MODAL (state) {
+    state.authenticationError = ''
   }
 }

@@ -20,16 +20,16 @@
           Register Account.
         </h2>
       </div>
-      <form class="mt-4 space-y-6 border p-2 border-gray-400 rounded-2xl" action="#" method="POST">
-        <input type="hidden" name="remember" value="true" />
+      <form class="mt-4 space-y-6 border p-2 border-gray-400 rounded-2xl" method="POST" @submit.prevent="handleFormSubmit">
+        <Alert />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
             <label for="email-address" class="sr-only">Email address</label>
-            <input id="email-address" name="email" type="email" autocomplete="email" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" />
+            <input id="email-address" v-model="email" name="email" type="email" autocomplete="email" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" />
           </div>
           <div>
             <label for="password" class="sr-only">Password</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
+            <input id="password" v-model="password" name="password" type="password" autocomplete="current-password" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
           </div>
         </div>
 
@@ -38,7 +38,7 @@
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
             </span>
-            Sign in
+            Sign up
           </button>
         </div>
       </form>
@@ -73,31 +73,38 @@
 <script>
 import { ref } from 'vue'
 import { LockClosedIcon } from '@heroicons/vue/solid'
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { useStore } from 'vuex'
+import Alert from '@/components/Alert.vue'
 
 export default {
   name: 'Signup',
   components: {
-    LockClosedIcon
+    LockClosedIcon,
+    Alert
   },
   setup () {
     const user = ref([])
-    console.log(getAuth().currentUser)
+    const email = ref('')
+    const password = ref('')
+    const store = useStore()
+
     function googleSignIn () {
-      const provider = new GoogleAuthProvider()
-      const auth = getAuth()
-      signInWithPopup(auth, provider)
-        .then(result => {
-          console.log(result)
-          alert(result.user)
-        }).catch(err => {
-          console.log(err)
-        })
+      store.commit('SIGN_IN_WITH_GOOGLE')
+    }
+
+    function handleFormSubmit () {
+      store.commit('SIGN_UP_WITH_EMAIL', {
+        email: email.value,
+        password: password.value
+      })
     }
 
     return {
       user,
-      googleSignIn
+      googleSignIn,
+      email,
+      password,
+      handleFormSubmit
     }
   }
 }

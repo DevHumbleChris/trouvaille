@@ -5,5 +5,6 @@ export default {
   hotels,
   openWishList: false,
   wishList: [],
-  pageLoadAnimation: false
+  pageLoadAnimation: false,
+  authenticationError: ''
 }
