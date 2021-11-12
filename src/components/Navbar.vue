@@ -197,14 +197,6 @@
                 </router-link>
               </div>
 
-              <!-- Search -->
-              <div class="flex lg:ml-6">
-                <a href="#" class="p-2 text-gray-400 hover:text-gray-500">
-                  <span class="sr-only">Search</span>
-                  <SearchIcon class="w-6 h-6" aria-hidden="true" />
-                </a>
-              </div>
-
               <!-- Cart -->
               <div class="ml-4 flow-root lg:ml-6">
                 <button class="group -m-2 p-2 flex items-center" @click="WISH_LIST_MODAL">
@@ -215,6 +207,33 @@
                   <WishList />
                 </button>
               </div>
+              <Menu as="div" class="relative inline-block text-left">
+                <div>
+                  <MenuButton class="inline-flex items-center justify-center w-full px-4 py-2 bg-white font-extrabold text-blue-700">
+                    <FontAwesomeIcon :icon="['fas', 'user-astronaut']" class="text-xl" />
+                    <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+                  </MenuButton>
+                </div>
+
+                <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                  <MenuItems class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div class="text-center mt-2 p-2">
+                      <img class="mx-auto h-20 w-auto rounded-full" src="https://www.kindpng.com/picc/m/271-2712971_cute-house-clipart-png-house-clipart-png-transparent.png" alt="user" />
+                      <p>
+                        Christopher Odhiambo
+                      </p>
+                    </div>
+                    <div class="py-1 text-center">
+                      <MenuItem v-slot="{ active }">
+                        <button :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                          <FontAwesomeIcon :icon="['fas', 'sign-out-alt']" />
+                          Log Out
+                        </button>
+                      </MenuItem>
+                    </div>
+                  </MenuItems>
+                </transition>
+              </Menu>
             </div>
           </div>
         </div>
@@ -238,9 +257,11 @@ import {
   TabPanel,
   TabPanels,
   TransitionChild,
-  TransitionRoot
+  TransitionRoot,
+  Menu, MenuButton, MenuItem, MenuItems
 } from '@headlessui/vue'
-import { MenuIcon, SearchIcon, GlobeIcon, XIcon } from '@heroicons/vue/outline'
+import { MenuIcon, GlobeIcon, XIcon } from '@heroicons/vue/outline'
+import { ChevronDownIcon } from '@heroicons/vue/solid'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import WishList from '@/components/WishList.vue'
 
@@ -333,10 +354,14 @@ export default {
     TransitionChild,
     TransitionRoot,
     MenuIcon,
-    SearchIcon,
     GlobeIcon,
     XIcon,
-    WishList
+    WishList,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+    ChevronDownIcon
   },
   data () {
     return {}

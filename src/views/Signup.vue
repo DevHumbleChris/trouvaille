@@ -20,7 +20,7 @@
           Register Account.
         </h2>
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST">
+      <form class="mt-4 space-y-6 border p-2 border-gray-400 rounded-2xl" action="#" method="POST">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
@@ -40,42 +40,65 @@
             </span>
             Sign in
           </button>
-          <button class="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <FontAwesomeIcon :icon="['fab', 'google']" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-            </span>
-            Sign in With Google
-          </button>
-          <button class="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <FontAwesomeIcon :icon="['fas', 'user-astronaut']" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-            </span>
-            Sign in As Guest
-          </button>
-        </div>
-
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <span class="ml-2 block font-medium">
-              Already Have An Account?
-            </span>
-            <router-link to="/login" class="font-extrabold text-md text-indigo-600 hover:text-indigo-500 mx-2">
-              Sign in.
-            </router-link>
-          </div>
         </div>
       </form>
+      <div>
+        <button class="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="googleSignIn">
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <FontAwesomeIcon :icon="['fab', 'google']" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+          </span>
+          Sign in With Google
+        </button>
+        <button class="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <FontAwesomeIcon :icon="['fas', 'user-astronaut']" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+          </span>
+          Sign in As Guest
+        </button>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <span class="ml-2 block font-medium">
+            Already Have An Account?
+          </span>
+          <router-link to="/login" class="font-extrabold text-md text-indigo-600 hover:text-indigo-500 mx-2">
+            Sign in.
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { LockClosedIcon } from '@heroicons/vue/solid'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 export default {
   name: 'Signup',
   components: {
     LockClosedIcon
+  },
+  setup () {
+    const user = ref([])
+    console.log(getAuth().currentUser)
+    function googleSignIn () {
+      const provider = new GoogleAuthProvider()
+      const auth = getAuth()
+      signInWithPopup(auth, provider)
+        .then(result => {
+          console.log(result)
+          alert(result.user)
+        }).catch(err => {
+          console.log(err)
+        })
+    }
+
+    return {
+      user,
+      googleSignIn
+    }
   }
 }
 </script>
