@@ -10,6 +10,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { initializeApp } from 'firebase/app'
+import { onAuthStateChanged, getAuth } from 'firebase/auth'
 
 library.add(fas, far, fab)
 
@@ -24,8 +25,14 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig)
 
-createApp(App)
-  .component('FontAwesomeIcon', FontAwesomeIcon)
-  .use(store)
-  .use(router)
-  .mount('#app')
+let app
+const auth = getAuth()
+onAuthStateChanged(auth, (user) => {
+  if (!app) {
+    createApp(App)
+      .component('FontAwesomeIcon', FontAwesomeIcon)
+      .use(store)
+      .use(router)
+      .mount('#app')
+  }
+})

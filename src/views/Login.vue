@@ -102,6 +102,8 @@
 import { ref, computed } from 'vue'
 import { LockClosedIcon } from '@heroicons/vue/solid'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import Alert from '@/components/Alert.vue'
 import { CirclesToRhombusesSpinner } from 'epic-spinners'
 
@@ -116,6 +118,7 @@ export default {
     const email = ref('')
     const password = ref('')
     const store = useStore()
+    const router = useRouter()
 
     const authenticationAnimation = computed(() => store.state.authenticationAnimation)
 
@@ -124,10 +127,15 @@ export default {
     }
 
     function handleSubmitForm () {
-      store.commit('SIGN_IN_WITH_EMAIL', {
-        email: email.value,
-        password: password.value
-      })
+      const auth = getAuth()
+      signInWithEmailAndPassword(auth, email.value, password.value)
+        .then((user) => {
+          router.push('/')
+          console.log(user)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
 
     return {

@@ -21,11 +21,10 @@ export default {
       const auth = getAuth()
 
       onAuthStateChanged(auth, (user) => {
-        console.log(user)
         if (!user) {
-          router.replace('/login')
+          router.push('/login')
         } else if (route.path === '/login' || route.path === '/signup') {
-          router.replace('/')
+          router.push('/')
         }
       })
     })

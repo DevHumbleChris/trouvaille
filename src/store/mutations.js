@@ -1,4 +1,7 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 export default {
   WISH_LIST_MODAL (state) {
@@ -38,7 +41,7 @@ export default {
 
       signInWithPopup(auth, provider)
         .then(result => {
-          console.log(result)
+          router.replace('/')
         })
         .catch(err => {
           state.authenticationError = err.message
@@ -61,6 +64,7 @@ export default {
       createUserWithEmailAndPassword(auth, payload.email, payload.password)
         .then(userCredential => {
           console.log(userCredential)
+          router.push('/')
         })
         .catch(err => {
           state.authenticationError = err.message
@@ -85,7 +89,7 @@ export default {
 
       signInWithEmailAndPassword(auth, payload.email, payload.password)
         .then(userCredential => {
-          console.log(userCredential)
+          return userCredential
         })
         .catch(err => {
           state.authenticationError = err.message
@@ -101,7 +105,9 @@ export default {
 
     signOut(auth)
       .then(() => {
-        alert('Logout successfully')
+        router.push({
+          name: 'Login'
+        })
       })
       .catch((err) => {
         alert(err.message)

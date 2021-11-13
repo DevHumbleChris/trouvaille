@@ -225,7 +225,7 @@
                     </div>
                     <div class="py-1 text-center">
                       <MenuItem v-slot="{ active }">
-                        <button :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                        <button :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']" @click="logout">
                           <FontAwesomeIcon :icon="['fas', 'sign-out-alt']" />
                           Log Out
                         </button>
@@ -376,11 +376,15 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'WISH_LIST_MODAL'
+      'WISH_LIST_MODAL',
+      'SIGN_OUT'
     ]),
     myWishList () {
       this.open = false
       this.WISH_LIST_MODAL()
+    },
+    logout () {
+      this.SIGN_OUT()
     }
   },
   setup () {
