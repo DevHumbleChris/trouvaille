@@ -10,5 +10,6 @@ export default {
   authenticationAnimation: {
     load: false,
     type: ''
-  }
+  },
+  user: []
 }
