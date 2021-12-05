@@ -181,9 +181,11 @@
               </p>
             </div>
           </div>
-          <button class="w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-            Confirm Dates
-          </button>
+          <LitepieDatepicker
+            placeholder="Confirm Dates"
+            v-model="dateValue"
+          >
+          </LitepieDatepicker>
           <button type="submit" class="mt-2 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Check Availability
           </button>
@@ -198,6 +200,7 @@ import { ref } from 'vue'
 import { StarIcon } from '@heroicons/vue/solid'
 import { mapState, mapMutations } from 'vuex'
 import { FulfillingBouncingCircleSpinner } from 'epic-spinners'
+import LitepieDatepicker from 'litepie-datepicker'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -257,7 +260,8 @@ export default {
   name: 'HotelReview',
   components: {
     StarIcon,
-    FulfillingBouncingCircleSpinner
+    FulfillingBouncingCircleSpinner,
+    LitepieDatepicker
   },
   data () {
     return {
@@ -327,12 +331,14 @@ export default {
   setup () {
     const selectedColor = ref(product.colors[0])
     const selectedSize = ref(product.sizes[2])
+    const dateValue = ref([])
 
     return {
       product,
       reviews,
       selectedColor,
-      selectedSize
+      selectedSize,
+      dateValue
     }
   }
 }

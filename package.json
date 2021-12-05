@@ -18,11 +18,16 @@
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tailwindcss/forms": "^0.3.4",
     "@tailwindcss/typography": "^0.4.1",
+    "@vue-leaflet/vue-leaflet": "^0.6.1",
     "autoprefixer": "^9",
     "axios": "^0.23.0",
+    "colors": "^1.4.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.7",
     "epic-spinners": "^1.1.0",
     "firebase": "^9.4.0",
+    "leaflet": "^1.7.1",
+    "litepie-datepicker": "^1.0.14",
     "postcss": "^7",
     "register-service-worker": "^1.7.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
@@ -47,7 +52,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.0.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^6.0.1",
     "sass-loader": "^8.0.2"
   }
 }
