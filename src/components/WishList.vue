@@ -9,7 +9,6 @@ import {
 } from '@headlessui/vue'
 import { StarIcon } from '@heroicons/vue/20/solid'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { FlowerSpinner } from 'epic-spinners'
 import { computed } from 'vue'
 
 const appStore = useAppStore()
@@ -183,7 +182,7 @@ const clearAll = () => {
                     v-if="pageLoadAnimation"
                     class="mx-auto flex justify-center align-canter max-w-xs mt-2 flex-wrap"
                   >
-                    <FlowerSpinner :animation-duration="2500" :size="120" color="#ff1d5e" />
+                    <div class="loader"></div>
                   </div>
                   <div v-if="!pageLoadAnimation && noOfWishListBucket <= 0" class="mt-8">
                     <div class="p-2">
