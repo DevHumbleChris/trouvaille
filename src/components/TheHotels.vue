@@ -29,12 +29,12 @@ const randomImagePic = (images: Image[]) => {
           >
             <router-link :to="`/hotel-review/${hotel.hotelId}`">
               <div
-                class="w-full relative min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none"
+                class="w-full relative h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none"
               >
                 <img
                   :src="randomImagePic(hotel.images)"
                   :alt="hotel.name"
-                  class="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                  class="w-full h-full object-cover"
                 />
               </div>
               <div class="mt-4 flex justify-between">

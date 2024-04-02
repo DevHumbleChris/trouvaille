@@ -83,29 +83,27 @@
                   class="pt-8 pb-6 px-4 space-y-8"
                 >
                   <div class="grid grid-cols-2 gap-x-4">
-                    <div
+                    <router-link
+                      :to="`/hotel-review/${item.hotelId}`"
                       v-for="item in category.featured"
                       :key="item.hotelId"
                       class="group relative text-sm"
                     >
                       <div
-                        class="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75"
+                        class="h-40 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75"
                       >
                         <img
                           :src="item.images[2].url"
                           :alt="item.images[2].altText ? item.images[2].altText : ''"
-                          class="object-center object-cover"
+                          class="w-full h-full object-center object-cover"
                         />
                       </div>
-                      <router-link
-                        :to="`/hotel-review/${item.hotelId}`"
-                        class="mt-4 block font-medium text-gray-900"
-                      >
+                      <p class="mt-4 block font-medium text-gray-900">
                         <span class="absolute z-10 inset-0" aria-hidden="true" />
                         {{ item.name }}
-                      </router-link>
+                      </p>
                       <p aria-hidden="true" class="mt-1 text-blue-600">Book Now</p>
-                    </div>
+                    </router-link>
                   </div>
                 </TabPanel>
               </TabPanels>
@@ -240,29 +238,27 @@
                         <div class="max-w-7xl mx-auto px-8">
                           <div class="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
                             <div class="col-start-2 grid grid-cols-2 gap-x-8">
-                              <div
+                              <router-link
+                                :to="`/hotel-review/${item.hotelId}`"
                                 v-for="item in category.featured"
                                 :key="item.name"
                                 class="group relative text-base sm:text-sm"
                               >
                                 <div
-                                  class="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75"
+                                  class="h-40 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75"
                                 >
                                   <img
                                     :src="item.images[3].url"
                                     :alt="item.images[3].altText ? item.images[3].altText : ''"
-                                    class="object-center object-cover"
+                                    class="w-full h-full object-center object-cover"
                                   />
                                 </div>
-                                <router-link
-                                  :to="`/hotel-review/${item.hotelId}`"
-                                  class="mt-4 block font-medium text-gray-900"
-                                >
+                                <p class="mt-4 block font-medium text-gray-900">
                                   <span class="absolute z-10 inset-0" aria-hidden="true" />
                                   {{ item.name }}
-                                </router-link>
+                                </p>
                                 <p aria-hidden="true" class="mt-1">Shop now</p>
-                              </div>
+                              </router-link>
                             </div>
                           </div>
                         </div>
