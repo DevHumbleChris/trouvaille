@@ -3,7 +3,7 @@
     v-if="pageLoadAnimation"
     class="mx-auto flex justify-center align-center max-w-xs mt-64 mb-3"
   >
-    <FulfillingBouncingCircleSpinner :animation-duration="4000" :size="90" color="#ff1d5e" />
+    <div class="loader"></div>
   </div>
   <div v-if="pageLoadAnimation" class="text-center text-xl">
     Trouvaille: Home Is Where the Heart
@@ -30,7 +30,7 @@
           <div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
             <img
               :src="hotel.images[1].url"
-              :alt="hotel.images[1].allText ? hotel.images[1].allText : ''"
+              :alt="hotel.images[1].altText ? hotel.images[1].altText : ''"
               class="w-full h-full object-center object-cover"
             />
           </div>
@@ -47,7 +47,7 @@
         >
           <img
             :src="hotel.images[2].url"
-            :alt="product.images[2].altText ? product.images[2].altText : ''"
+            :alt="hotel.images[2].altText ? hotel.images[2].altText : ''"
             class="w-full h-full object-center"
           />
         </div>
@@ -99,14 +99,22 @@
               >
               <div>
                 <button
-                  class="rounded-md border w-fit border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-                  @click="addWishList"
+                  v-if="isAddedToWishList"
+                  class="rounded-md border w-fit shadow-sm px-4 py-2 bg-rose-600 text-sm font-medium text-white hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-rose-100 focus:ring-rose-500"
+                  @click="removeFromWishList(hotel.hotelId)"
                 >
-                  <span v-if="isAddedToWishList" class="text-indigo-600 font-extrabold">
-                    <FontAwesomeIcon :icon="['fas', 'heart']" class="text-red-600" />
-                    Added to Wishlist
+                  <span>
+                    <FontAwesomeIcon :icon="['fas', 'heart']" />
+                    Added
                   </span>
-                  <span v-else>
+                </button>
+
+                <button
+                  v-else
+                  class="rounded-md border w-fit border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                  @click="addWishList(hotel.hotelId)"
+                >
+                  <span>
                     <FontAwesomeIcon :icon="['fas', 'heart']" />
                     Add to Wishlist
                   </span>
@@ -243,67 +251,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { StarIcon } from '@heroicons/vue/20/solid'
-import { FulfillingBouncingCircleSpinner } from 'epic-spinners'
 import { useAppStore } from '../stores/app'
 import { useRoute } from 'vue-router'
 
 const appStore = useAppStore()
 
 const { params } = useRoute()
-
-const product = {
-  name: 'Basic Tee 6-Pack',
-  price: '$192',
-  href: '#',
-  breadcrumbs: [
-    { id: 1, name: 'Men', href: '#' },
-    { id: 2, name: 'Clothing', href: '#' }
-  ],
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.'
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.'
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.'
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.'
-    }
-  ],
-  colors: [
-    { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-    { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-    { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' }
-  ],
-  sizes: [
-    { name: 'XXS', inStock: false },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: true },
-    { name: '2XL', inStock: true },
-    { name: '3XL', inStock: true }
-  ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    'Hand cut and sewn locally',
-    'Dyed with our proprietary colors',
-    'Pre-washed & pre-shrunk',
-    'Ultra-soft 100% cotton'
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.'
-}
-// const reviews = { href: '#', average: 4, totalCount: 117 }
 
 const formData = ref({
   adult: 0,
@@ -329,21 +282,23 @@ const hotel = computed(() => {
 })
 
 const isAddedToWishList = computed(() => {
-  const hotel = wishList.value.filter((oneHotel) => oneHotel.hotelId === hotel.value.hotelId)
-  if (hotel[0] === undefined) {
-    return false
-  } else {
+  const filteredHotel = wishList.value.filter(
+    (oneHotel) => oneHotel.hotelId === hotel.value.hotelId
+  )
+
+  if (filteredHotel.length > 0) {
     return true
+  } else {
+    return false
   }
 })
 
-const addWishList = () => {
-  if (isAddedToWishList.value) {
-    appStore?.REMOVE_FROM_WISH_LIST(hotel.value.hotelId)
-    // isAddedToWishList.value = false
-  } else {
-    appStore?.ADD_TO_WISH_LIST(hotel.value.hotelId)
-  }
+const addWishList = (hotelId: string) => {
+  appStore?.ADD_TO_WISH_LIST(hotelId)
+}
+
+const removeFromWishList = (hotelId: string) => {
+  appStore?.REMOVE_FROM_WISH_LIST(hotelId)
 }
 
 const handleSubmit = () => {}
