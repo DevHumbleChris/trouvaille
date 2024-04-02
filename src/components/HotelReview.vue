@@ -22,7 +22,7 @@
         <div class="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
           <img
             :src="hotel.images[0].url"
-            :alt="hotel.images[0].altText"
+            :alt="hotel.images[0].altText ? hotel.images[0].altText : ''"
             class="w-full h-full object-center object-cover"
           />
         </div>
@@ -30,14 +30,14 @@
           <div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
             <img
               :src="hotel.images[1].url"
-              :alt="hotel.images[1].allText"
+              :alt="hotel.images[1].allText ? hotel.images[1].allText : ''"
               class="w-full h-full object-center object-cover"
             />
           </div>
           <div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
             <img
               :src="hotel.images[3].url"
-              :alt="hotel.images[3].altText"
+              :alt="hotel.images[3].altText ? hotel.images[3].altText : ''"
               class="w-full h-full object-center object-cover"
             />
           </div>
@@ -47,7 +47,7 @@
         >
           <img
             :src="hotel.images[2].url"
-            :alt="product.images[2].altText"
+            :alt="product.images[2].altText ? product.images[2].altText : ''"
             class="w-full h-full object-center"
           />
         </div>
@@ -61,7 +61,11 @@
               <div
                 class="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
               >
-                <img :src="image.url" :alt="image.altText" class="w-full h-full object-cover" />
+                <img
+                  :src="image.url"
+                  :alt="image.altText ? image.altText : ''"
+                  class="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
