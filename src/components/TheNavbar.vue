@@ -154,10 +154,7 @@
               <a href="https://wa.me/message/BSLLTZE6NKUIF1" class="text-2xl mx-2">
                 <FontAwesomeIcon :icon="['fab', 'whatsapp']" />
               </a>
-              <div>
-                Made With
-                <FontAwesomeIcon :icon="['fas', 'heart']" class="mx-1 text-red-600" />, Am.Chris_KE
-              </div>
+              
             </div>
           </div>
         </TransitionChild>
