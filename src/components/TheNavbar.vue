@@ -129,7 +129,7 @@
               </div>
             </div>
 
-            <div class="mx-auto border-t border-gray-200 py-2 px-4">
+            <!-- <div class="mx-auto border-t border-gray-200 py-2 px-4">
               <a href="https://github.com/DevHumbleChris" class="text-2xl mx-2">
                 <FontAwesomeIcon :icon="['fab', 'github']" />
               </a>
@@ -155,7 +155,7 @@
                 <FontAwesomeIcon :icon="['fab', 'whatsapp']" />
               </a>
               
-            </div>
+            </div> -->
           </div>
         </TransitionChild>
       </Dialog>
