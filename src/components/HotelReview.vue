@@ -235,13 +235,15 @@
               </p>
             </div>
           </div>
-          <!-- <LitepieDatepicker placeholder="Confirm Dates" v-model="dateValue"> </LitepieDatepicker> -->
-          <button
-            type="submit"
+              <!-- <LitepieDatepicker placeholder="Confirm Dates" v-model="dateValue"> </LitepieDatepicker> -->
+              <div>
+    <button
+    type="submit"
             class="mt-2 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Check Availability
-          </button>
+     @click="notify">
+     Check Avalibility</button>
+  </div>
+      
         </form>
       </div>
     </div>
@@ -249,87 +251,95 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { StarIcon } from '@heroicons/vue/20/solid'
-import { useAppStore } from '../stores/app'
-import { useRoute } from 'vue-router'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+import { computed, onMounted, ref } from 'vue';
+import { useAppStore } from '../stores/app';
+import { useRoute } from 'vue-router';
 
-const appStore = useAppStore()
-
-const { params } = useRoute()
+const appStore = useAppStore();
+const { params } = useRoute();
 
 const formData = ref({
   adult: 0,
   children: 0,
   infants: 0
-})
+});
 
 const hotels = computed(() => {
-  return appStore?.hotels
-})
+  return appStore?.hotels;
+});
 
 const wishList = computed(() => {
-  return appStore?.wishList
-})
+  return appStore?.wishList;
+});
 
 const pageLoadAnimation = computed(() => {
-  return appStore?.pageLoadAnimation
-})
+  return appStore?.pageLoadAnimation;
+});
 
 const hotel = computed(() => {
-  const hotel = hotels.value.filter((hotel) => hotel.hotelId === params.hotelID)
-  return hotel[0]
-})
+  const hotel = hotels.value.filter((hotel) => hotel.hotelId === params.hotelID);
+  return hotel[0];
+});
 
 const isAddedToWishList = computed(() => {
   const filteredHotel = wishList.value.filter(
     (oneHotel) => oneHotel.hotelId === hotel.value.hotelId
-  )
+  );
 
-  if (filteredHotel.length > 0) {
-    return true
-  } else {
-    return false
-  }
-})
+  return filteredHotel.length > 0;
+});
 
 const addWishList = (hotelId: string) => {
-  appStore?.ADD_TO_WISH_LIST(hotelId)
-}
+  appStore?.ADD_TO_WISH_LIST(hotelId);
+};
 
 const removeFromWishList = (hotelId: string) => {
-  appStore?.REMOVE_FROM_WISH_LIST(hotelId)
-}
+  appStore?.REMOVE_FROM_WISH_LIST(hotelId);
+};
 
-const handleSubmit = () => {}
+const handleSubmit = () => {};
 
 const incAdult = () => {
-  formData.value.adult += 1
-}
+  formData.value.adult += 1;
+};
 
 const decAdult = () => {
-  formData.value.adult -= 1
-}
+  formData.value.adult -= 1;
+};
 
 const incChildren = () => {
-  formData.value.children += 1
-}
+  formData.value.children += 1;
+};
 
 const decChildren = () => {
-  formData.value.children -= 1
-}
+  formData.value.children -= 1;
+};
 
 const incInfants = () => {
-  formData.value.infants += 1
-}
+  formData.value.infants += 1;
+};
 
 const decInfants = () => {
-  formData.value.infants -= 1
-}
+  formData.value.infants -= 1;
+};
+const notify = () => {
+  const messages = [
+    "Availability checked! Rooms are available.",
+    "Sorry, rooms are full at the moment. Please try again later.",
+    // Add more messages as needed
+  ];
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  toast(messages[randomIndex], {
+    autoClose: 1000,
+  });
+};
+
 
 onMounted(() => {
-  appStore?.loadSpinner()
-})
+  appStore?.loadSpinner();
+});
 </script>
 
 <style>
@@ -339,5 +349,6 @@ onMounted(() => {
 }
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
-}
+} 
+
 </style>
